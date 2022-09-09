@@ -17,7 +17,7 @@ const loanapplication = sequelize.define('loanapplications', {
   },
   status: {
     type: Sequelize.STRING,
-    defaultValue: "Not Confirmed",
+    defaultValue: 'OnReview',
   },
   score: {
     type: Sequelize.INTEGER,

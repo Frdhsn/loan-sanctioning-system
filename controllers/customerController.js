@@ -27,8 +27,8 @@ exports.updateCustomer = catchAsync(async (req, res, next) => {
 });
 exports.applyForLoan = catchAsync(async (req, res, next) => {
   const customerData = await customerService.applyForLoan(req.params.id, req.body);
-  if (!customerData[0]) {
-    return next(new AppError('No user was found with that ID', 404));
+  if (customerData === null) {
+    return next(new AppError('Can not apply for loan!', 404));
   }
   contentNegotiate.sendResponse(req, res, 200, {}, 'Applied for loan!');
 });
@@ -38,5 +38,12 @@ exports.deleteCustomer = catchAsync(async (req, res, next) => {
     return next(new AppError('No user was found with that ID', 404));
   }
   contentNegotiate.sendResponse(req, res, 204, {}, 'User is Deleted!');
+});
+exports.deleteLoanApplication = catchAsync(async (req, res, next) => {
+  const customerData = await customerService.deleteLoanApplication(req.params.id);
+  if (!customerData) {
+    return next(new AppError('User doesnt have any loan to delete!', 404));
+  }
+  contentNegotiate.sendResponse(req, res, 204, {}, 'Loan application is Deleted!');
 });
 exports.customerService = customerService;

@@ -13,7 +13,12 @@ router
   .route('/:id')
   .get(customers.getCustomer)
   .put(customerMiddleware.Protect, customerMiddleware.isAuthorized, customers.updateCustomer)
-  .delete(customerMiddleware.Protect, customerMiddleware.isAuthorized, customers.deleteCustomer)
+  .delete(customerMiddleware.Protect, customerMiddleware.isAuthorized, customers.deleteCustomer);
+//.post(customerMiddleware.Protect, customerMiddleware.isAuthorized, customers.applyForLoan);
+
+router
+  .route('/loan/:id')
+  .delete(customerMiddleware.Protect, customerMiddleware.isAuthorized, customers.deleteLoanApplication)
   .post(customerMiddleware.Protect, customerMiddleware.isAuthorized, customers.applyForLoan);
 
 module.exports = router;

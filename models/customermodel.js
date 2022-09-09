@@ -2,19 +2,19 @@ const Sequelize = require('sequelize');
 const sequelize = require('./dbconnect');
 
 const customer = sequelize.define('customers', {
-    id: {
-      type: Sequelize.INTEGER,
-      autoIncrement: true,
-      primaryKey: true,
+  id: {
+    type: Sequelize.INTEGER,
+    autoIncrement: true,
+    primaryKey: true,
+  },
+  bankAccountNo: {
+    type: Sequelize.STRING,
+    allowNull: false,
+    unique: true,
+    validate: {
+      notEmpty: true,
     },
-    bankAccountNo: {
-      type: Sequelize.STRING,
-      allowNull: false,
-      unique: true,
-      validate: {
-        notEmpty: true,
-      },
-    },
+  },
   name: {
     type: Sequelize.STRING,
     allowNull: false,
