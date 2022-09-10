@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const customers = require('./routes/customerRoutes');
+const employees = require('./routes/employeeRoutes');
 
 const db = require('./config/dbconfig');
 const cors = require('cors');
@@ -20,6 +21,7 @@ app.use(
 app.use(express.json());
 db();
 app.use('/api/v1/customers', customers);
+app.use('/api/v1/employees', employees);
 // app.use('/',(req,res)=>{
 //     res.json({message: 'hello from server'});
 // })

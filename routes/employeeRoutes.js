@@ -1,19 +1,23 @@
 const express = require('express');
-const customers = require('../controllers/customerController');
-const authController = require('../controllers/authController');
-const customerMiddleware = require('../middleware/customerProtect');
+const employee = require('../controllers/employeeController');
+const authController = require('../controllers/authControllerForEmployees');
+const employeeMiddleware = require('../middleware/employeeProtect');
 
 const router = express.Router();
 
 router.route('/signup').post(authController.signup); // only admin can create employees
 router.route('/login').post(authController.login);
 
-router.route('/').get(customers.getAllCustomer);
+router.route('/').get(employee.getAllEmployee);
 router
   .route('/:id')
-  .get(customers.getCustomer)
-  .put(customerMiddleware.Protect, customerMiddleware.isAuthorized, customers.updateCustomer)
-  .delete(customerMiddleware.Protect, customerMiddleware.isAuthorized, customers.deleteCustomer)
-  .post(customerMiddleware.Protect, customerMiddleware.isAuthorized, customers.applyForLoan);
+  .get(employee.getEmployee)
+  .put(employeeMiddleware.Protect, employeeMiddleware.isAuthorized, employee.updateEmployee)
+  .delete(employeeMiddleware.Protect, employeeMiddleware.isAuthorized, employee.deleteEmployee);
+
+router.route('/loan/:id').delete(employeeMiddleware.Protect, employee.deleteLoanApplication);
+router.route('/loan/:id/approve').put(employeeMiddleware.Protect, employee.approveLoanApplication);
+router.route('/loan/:id/decline').put(employeeMiddleware.Protect, employee.declineLoanApplication);
+router.route('/loan/:id/predict').put(employeeMiddleware.Protect, employee.predictLoanApplication);
 
 module.exports = router;
