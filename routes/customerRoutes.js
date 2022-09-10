@@ -14,11 +14,9 @@ router
   .get(customers.getCustomer)
   .put(customerMiddleware.Protect, customerMiddleware.isAuthorized, customers.updateCustomer)
   .delete(customerMiddleware.Protect, customerMiddleware.isAuthorized, customers.deleteCustomer);
-//.post(customerMiddleware.Protect, customerMiddleware.isAuthorized, customers.applyForLoan);
 
 router
   .route('/loan/:id')
-  .delete(customerMiddleware.Protect, customerMiddleware.isAuthorized, customers.deleteLoanApplication)
-  .post(customerMiddleware.Protect, customerMiddleware.isAuthorized, customers.applyForLoan);
-
+  .post(customerMiddleware.Protect, customerMiddleware.isAuthorized, customers.applyForLoan)
+  .delete(customerMiddleware.Protect, customerMiddleware.isAuthorized, customers.deleteLoanApplication);
 module.exports = router;

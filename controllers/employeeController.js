@@ -1,41 +1,66 @@
-const Customer = require('../models/employeemodel');
-const CustomerService = require('../services/customerServices');
+const Employee = require('../models/employeemodel');
+const EmployeeService = require('../services/employeeServices');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/AppError');
 const contentNegotiate = require('../utils/sendResponse');
+const loanapplication = require('../models/loanapplicationmodel');
 
-const customerService = new CustomerService(Customer);
+const employeeService = new EmployeeService(Employee, loanapplication);
 
-exports.getCustomer = catchAsync(async (req, res, next) => {
-  const customerData = await customerService.getCustomer(req.params.id);
-  if (!customerData) {
+exports.getEmployee = catchAsync(async (req, res, next) => {
+  const employeeData = await employeeService.getEmployee(req.params.id);
+  if (!employeeData) {
+    return next(new AppError('No Employee was found with that ID', 404));
+  }
+  contentNegotiate.sendResponse(req, res, 200, employeeData, 'Employee Fetched Successfully!');
+});
+exports.getAllEmployee = catchAsync(async (req, res, next) => {
+  const employeesData = await employeeService.getAllEmployee();
+  contentNegotiate.sendResponse(req, res, 200, employeesData, 'Employees Fetched Successfully!');
+});
+exports.updateEmployee = catchAsync(async (req, res, next) => {
+  const employeeData = await employeeService.updateEmployee(req.params.id, req.body);
+  if (!employeeData[0]) {
     return next(new AppError('No user was found with that ID', 404));
   }
-  contentNegotiate.sendResponse(req, res, 200, customerData, 'User Fetched Successfully!');
+  contentNegotiate.sendResponse(req, res, 200, {}, 'Employee is Updated!');
 });
-exports.getAllCustomer = catchAsync(async (req, res, next) => {
-  const customersData = await customerService.getAllCustomer();
-  contentNegotiate.sendResponse(req, res, 200, customersData, 'Users Fetched Successfully!');
+// WIP
+exports.predictLoanApplication = catchAsync(async (req, res, next) => {
+  const employeeData = await employeeService.predictLoan(req.params.id);
+  console.log('were at predict loan controller! ');
+  console.log(employeeData);
+  if (employeeData === null) {
+    return next(new AppError('No loan found to predict', 404));
+  }
+  contentNegotiate.sendResponse(req, res, 200, employeeData, 'Loan prediction done!');
 });
-exports.updateCustomer = catchAsync(async (req, res, next) => {
-  const customerData = await customerService.updateCustomer(req.params.id, req.body);
-  if (!customerData[0]) {
+exports.approveLoanApplication = catchAsync(async (req, res, next) => {
+  const loanData = await employeeService.approveLoan(req.params.id);
+  if (loanData === null) {
+    return next(new AppError('No loan found to approve', 404));
+  }
+  contentNegotiate.sendResponse(req, res, 200, loanData, 'Loan approved!');
+});
+exports.declineLoanApplication = catchAsync(async (req, res, next) => {
+  const loanData = await employeeService.declineLoan(req.params.id);
+  if (loanData === null) {
+    return next(new AppError('No loan found to decline', 404));
+  }
+  contentNegotiate.sendResponse(req, res, 200, loanData, 'Loan declined!');
+});
+exports.deleteLoanApplication = catchAsync(async (req, res, next) => {
+  const employeeData = await employeeService.deleteLoanApplication(req.params.id);
+  if (!employeeData) {
+    return next(new AppError('No Loan was found with that ID', 404));
+  }
+  contentNegotiate.sendResponse(req, res, 204, {}, 'Loan application is Deleted!');
+});
+exports.deleteEmployee = catchAsync(async (req, res, next) => {
+  const employeeData = await employeeService.deleteEmployee(req.params.id);
+  if (!employeeData) {
     return next(new AppError('No user was found with that ID', 404));
   }
-  contentNegotiate.sendResponse(req, res, 200, {}, 'User is Updated!');
+  contentNegotiate.sendResponse(req, res, 204, {}, 'Employee is Deleted!');
 });
-exports.applyForLoan = catchAsync(async (req, res, next) => {
-  const customerData = await customerService.applyForLoan(req.params.id, req.body);
-  if (!customerData[0]) {
-    return next(new AppError('No user was found with that ID', 404));
-  }
-  contentNegotiate.sendResponse(req, res, 200, {}, 'Applied for loan!');
-});
-exports.deleteCustomer = catchAsync(async (req, res, next) => {
-  const customerData = await customerService.deleteCustomer(req.params.id);
-  if (!customerData) {
-    return next(new AppError('No user was found with that ID', 404));
-  }
-  contentNegotiate.sendResponse(req, res, 204, {}, 'User is Deleted!');
-});
-exports.customerService = customerService;
+exports.employeeService = employeeService;
