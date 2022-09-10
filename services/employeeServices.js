@@ -71,11 +71,6 @@ class employeeServices {
         customerData.status = 'approved';
       }
       await customerData.save();
-      //console.log(`calculated score: ${sc}`);
-      // // update score column
-      // const customerData2 = await this.loanTable.update(customerData, {
-      //   where: { score: sc },
-      // });
       return customerData;
     } else {
       // return error couldn't find any loan with that id
@@ -87,11 +82,7 @@ class employeeServices {
       where: { customerID: id },
     });
     if (customerData) {
-      // first score using weights
-
-      //if (customerData.score > 5) {
       customerData.status = 'declined';
-      //}
       await customerData.save();
       return customerData;
     } else {
