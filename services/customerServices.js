@@ -87,5 +87,11 @@ class customerServices {
     });
     return customerData;
   };
+  getCustomerbyID = async (id) => {
+    const customerData = await this.customerTable.findOne({
+      where: { id },
+    });
+    return customerData;
+  };
 }
 module.exports = customerServices;

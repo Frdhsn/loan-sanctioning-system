@@ -9,7 +9,7 @@ exports.sendJsonResponse = (req, res, statusCode, data, message) => {
     data: data,
   });
 };
-    exports.sendXmlResponse = (req, res, statusCode, data) => {
+exports.sendXmlResponse = (req, res, statusCode, data) => {
   res.setHeader('content-type', 'application/xml');
   //console.log(js2xmlparser.parse('data', data));
   return res.status(statusCode).send(js2xmlparser.parse('data', data));
