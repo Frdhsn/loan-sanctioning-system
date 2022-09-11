@@ -28,6 +28,12 @@ class employeeServices {
     const employeeData = await this.employeeTable.findAll();
     return employeeData;
   };
+  getAllLoanApplications = async () => {
+    //console.log(`currently on service `);
+    const employeeData = await this.loanTable.findAll();
+    //console.log(employeeData);
+    return employeeData;
+  };
   updateEmployee = async (id, employeeBody) => {
     const employeeData = await this.employeeTable.update(employeeBody, {
       where: { id },

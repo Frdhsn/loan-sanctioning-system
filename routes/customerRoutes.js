@@ -17,6 +17,7 @@ router
 
 router
   .route('/loan/:id')
+  .get(customerMiddleware.Protect, customerMiddleware.isAuthorized, customers.getLoanStatus)
   .post(customerMiddleware.Protect, customerMiddleware.isAuthorized, customers.applyForLoan)
   .delete(customerMiddleware.Protect, customerMiddleware.isAuthorized, customers.deleteLoanApplication);
 module.exports = router;

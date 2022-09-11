@@ -10,9 +10,16 @@ const customerService = new CustomerService(Customer, loanapplication);
 exports.getCustomer = catchAsync(async (req, res, next) => {
   const customerData = await customerService.getCustomer(req.params.id);
   if (!customerData) {
-    return next(new AppError('No user was found with that ID', 404));
+    return next(new AppError('No customer was found with that ID', 404));
   }
-  contentNegotiate.sendResponse(req, res, 200, customerData, 'User Fetched Successfully!');
+  contentNegotiate.sendResponse(req, res, 200, customerData, 'Customer Fetched Successfully!');
+});
+exports.getLoanStatus = catchAsync(async (req, res, next) => {
+  const customerData = await customerService.getLoanStatus(req.params.id);
+  if (!customerData) {
+    return next(new AppError('No loan application found with this customer ID', 404));
+  }
+  contentNegotiate.sendResponse(req, res, 200, customerData, 'Loan Status Fetched Successfully!');
 });
 exports.getAllCustomer = catchAsync(async (req, res, next) => {
   const customersData = await customerService.getAllCustomer();

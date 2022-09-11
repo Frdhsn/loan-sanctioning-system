@@ -23,6 +23,12 @@ class customerServices {
     });
     return customerData;
   };
+  getLoanStatus = async (id) => {
+    const customerData = await this.loanTable.findOne({
+      where: { customerID: id },
+    });
+    return customerData;
+  };
   // without password
   getAllCustomer = async () => {
     const customerData = await this.customerTable.findAll();

@@ -10,7 +10,7 @@ const employeeService = new EmployeeService(Employee, loanapplication);
 exports.getEmployee = catchAsync(async (req, res, next) => {
   const employeeData = await employeeService.getEmployee(req.params.id);
   if (!employeeData) {
-    return next(new AppError('No Employee was found with that ID', 404));
+    return next(new AppError('XXXNo Employee was found with that ID', 404));
   }
   contentNegotiate.sendResponse(req, res, 200, employeeData, 'Employee Fetched Successfully!');
 });
@@ -18,18 +18,23 @@ exports.getAllEmployee = catchAsync(async (req, res, next) => {
   const employeesData = await employeeService.getAllEmployee();
   contentNegotiate.sendResponse(req, res, 200, employeesData, 'Employees Fetched Successfully!');
 });
+exports.getAllLoanApplications = catchAsync(async (req, res, next) => {
+  //console.log(`hit controller`);
+  const employeesData = await employeeService.getAllLoanApplications();
+  contentNegotiate.sendResponse(req, res, 200, employeesData, 'All Loan Applications Fetched Successfully!');
+});
 exports.updateEmployee = catchAsync(async (req, res, next) => {
   const employeeData = await employeeService.updateEmployee(req.params.id, req.body);
   if (!employeeData[0]) {
-    return next(new AppError('No user was found with that ID', 404));
+    return next(new AppError('No employee was found with that ID', 404));
   }
   contentNegotiate.sendResponse(req, res, 200, {}, 'Employee is Updated!');
 });
 // WIP
 exports.predictLoanApplication = catchAsync(async (req, res, next) => {
   const employeeData = await employeeService.predictLoan(req.params.id);
-  console.log('were at predict loan controller! ');
-  console.log(employeeData);
+  //console.log('were at predict loan controller! ');
+  //console.log(employeeData);
   if (employeeData === null) {
     return next(new AppError('No loan found to predict', 404));
   }
