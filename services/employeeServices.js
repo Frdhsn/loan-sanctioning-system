@@ -1,10 +1,12 @@
 const bcrypt = require('bcrypt');
 const calculateScore = require('./../utils/calculateScore');
+const emailService = require('./../utils/sendEmail');
 
 class employeeServices {
-  constructor(table, loanTable) {
+  constructor(table, loanTable, customerTable) {
     this.employeeTable = table;
     this.loanTable = loanTable;
+    this.customerTable = customerTable;
   }
   createEmployee = async (employeeBody) => {
     const password = await bcrypt.hash(employeeBody.password, 10);
@@ -69,12 +71,19 @@ class employeeServices {
     const customerData = await this.loanTable.findOne({
       where: { customerID: id },
     });
+    const customerEmail = await this.customerTable.findOne({
+      where: { id },
+    });
     if (customerData) {
       // first score using weights
+      customerData.status = 'approved';
+      const message = {
+        to: customerEmail,
+        subject: 'Loan Approval',
+        text: 'Congratulations! your loan has been approved!',
+      };
+      emailService.sendEmail(message);
 
-      if (customerData.score > 5) {
-        customerData.status = 'approved';
-      }
       await customerData.save();
       return customerData;
     } else {
@@ -86,8 +95,18 @@ class employeeServices {
     const customerData = await this.loanTable.findOne({
       where: { customerID: id },
     });
+
+    const customerEmail = await this.customerTable.findOne({
+      where: { id },
+    });
     if (customerData) {
       customerData.status = 'declined';
+      const message = {
+        to: customerEmail,
+        subject: 'Loan Declined',
+        text: 'Sorry! your loan has been declined!',
+      };
+      emailService.sendEmail(message);
       await customerData.save();
       return customerData;
     } else {

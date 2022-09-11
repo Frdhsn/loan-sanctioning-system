@@ -14,6 +14,13 @@ exports.getCustomer = catchAsync(async (req, res, next) => {
   }
   contentNegotiate.sendResponse(req, res, 200, customerData, 'Customer Fetched Successfully!');
 });
+exports.getCustomerbyID = catchAsync(async (req, res, next) => {
+  const customerData = await customerService.getCustomerbyID(req.params.id);
+  if (!customerData) {
+    return next(new AppError('No customer was found with that ID', 404));
+  }
+  contentNegotiate.sendResponse(req, res, 200, customerData, 'Customer Fetched Successfully!');
+});
 exports.getLoanStatus = catchAsync(async (req, res, next) => {
   const customerData = await customerService.getLoanStatus(req.params.id);
   if (!customerData) {

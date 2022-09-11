@@ -4,8 +4,9 @@ const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/AppError');
 const contentNegotiate = require('../utils/sendResponse');
 const loanapplication = require('../models/loanapplicationmodel');
+const Customer = require('../models/customermodel');
 
-const employeeService = new EmployeeService(Employee, loanapplication);
+const employeeService = new EmployeeService(Employee, loanapplication, Customer);
 
 exports.getEmployee = catchAsync(async (req, res, next) => {
   const employeeData = await employeeService.getEmployee(req.params.id);
