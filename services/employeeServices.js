@@ -40,7 +40,6 @@ class employeeServices {
     });
     return employeeData;
   };
-  // WIP
   predictLoan = async (id) => {
     const customerData = await this.loanTable.findOne({
       where: { customerID: id },
