@@ -51,9 +51,41 @@ class employeeServices {
     if (customerData) {
       // first score using weights
 
-      const { w1, w2, w3, w4, w5 } = customerData;
-      const weights = [w1, w2, w3, w4, w5];
-      const sc = calculateScore.calculate(weights);
+      const {
+        currentLoanAmount,
+        creditScore,
+        annualIncome,
+        yearsInCurrentJob,
+        monthlyDebt,
+        yearsofCreditHistory,
+        lastDelinquent,
+        openAccounts,
+        creditProblems,
+        creditBalance,
+        maxOpenCredit,
+        bankruptcies,
+        term,
+        homeOwnership,
+        purpose,
+      } = customerData;
+      const weights = [
+        currentLoanAmount,
+        creditScore,
+        annualIncome,
+        yearsInCurrentJob,
+        monthlyDebt,
+        yearsofCreditHistory,
+        lastDelinquent,
+        openAccounts,
+        creditProblems,
+        creditBalance,
+        maxOpenCredit,
+        bankruptcies,
+        term,
+        homeOwnership,
+        purpose,
+      ];
+      const sc = await calculateScore.calculate(weights);
       customerData.score = sc;
       await customerData.save();
       //console.log(`calculated score: ${sc}`);
