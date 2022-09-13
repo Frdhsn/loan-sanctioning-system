@@ -54,14 +54,40 @@ class customerServices {
         where: { id },
       });
       console.log(`before changes in loan table`);
-      const { w1, w2, w3, w4, w5 } = customerBody;
+      const {
+        currentLoanAmount,
+        creditScore,
+        annualIncome,
+        yearsInCurrentJob,
+        monthlyDebt,
+        yearsofCreditHistory,
+        lastDelinquent,
+        openAccounts,
+        creditProblems,
+        creditBalance,
+        maxOpenCredit,
+        bankruptcies,
+        term,
+        homeOwnership,
+        purpose,
+      } = customerBody;
       const newCustomer = {
         customerID: id,
-        w1,
-        w2,
-        w3,
-        w4,
-        w5,
+        currentLoanAmount,
+        creditScore,
+        annualIncome,
+        yearsInCurrentJob,
+        monthlyDebt,
+        yearsofCreditHistory,
+        lastDelinquent,
+        openAccounts,
+        creditProblems,
+        creditBalance,
+        maxOpenCredit,
+        bankruptcies,
+        term,
+        homeOwnership,
+        purpose,
       };
       customerData = await this.loanTable.create(newCustomer);
       return customerData;

@@ -44,7 +44,7 @@ exports.applyForLoan = catchAsync(async (req, res, next) => {
   if (customerData === null) {
     return next(new AppError('Can not apply for loan!', 404));
   }
-  contentNegotiate.sendResponse(req, res, 200, {}, 'Applied for loan!');
+  contentNegotiate.sendResponse(req, res, 200, customerData, 'Applied for loan!');
 });
 exports.deleteCustomer = catchAsync(async (req, res, next) => {
   const customerData = await customerService.deleteCustomer(req.params.id);

@@ -39,7 +39,7 @@ const customer = sequelize.define('customers', {
     },
   },
   score: {
-    type: Sequelize.INTEGER,
+    type: Sequelize.DOUBLE,
     defaultValue: 0,
     // validate: {
     //   notEmpty: true,
