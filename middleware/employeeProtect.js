@@ -14,7 +14,7 @@ exports.isAuthorized = catchAsync(async (req, res, next) => {
   if (!employee) {
     return next(new AppError('No employee was found with that ID', 404));
   }
-  if (employee.name !== req.employee.name) {
+  if (employee.name !== req.user.name) {
     return next(new AppError(`You don't have the permission`, 403));
   }
   next();
@@ -47,7 +47,7 @@ exports.Protect = catchAsync(async (req, res, next) => {
   //4) check if user changed password after jwt was issued\
   console.log(`before assigning: `);
   //console.log(req.user);
-  req.employee = freshUser;
+  req.user = freshUser;
   //console.log(`sudo`);
   //console.log(freshUser);
   console.log(req.body);

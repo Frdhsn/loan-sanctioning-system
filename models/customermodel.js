@@ -38,19 +38,9 @@ const customer = sequelize.define('customers', {
       notEmpty: true,
     },
   },
-  score: {
-    type: Sequelize.DOUBLE,
-    defaultValue: 0,
-    // validate: {
-    //   notEmpty: true,
-    // },
-  },
-  loanee: {
+  isEmployee: {
     type: Sequelize.INTEGER,
     defaultValue: 0,
-    // validate: {
-    //   notEmpty: true,
-    // },
   },
 });
 
