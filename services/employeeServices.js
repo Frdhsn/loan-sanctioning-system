@@ -25,6 +25,13 @@ class employeeServices {
     });
     return employeeData;
   };
+  getLoanStatus = async (id) => {
+    console.log(`query kortesi ` + id + `diye!`);
+    const customerData = await this.loanTable.findOne({
+      where: { customerID: id },
+    });
+    return customerData;
+  };
   // without password
   getAllEmployee = async () => {
     const employeeData = await this.employeeTable.findAll();
@@ -70,9 +77,12 @@ class employeeServices {
       } = customerData;
       const weights = [
         currentLoanAmount,
+        term,
         creditScore,
         annualIncome,
         yearsInCurrentJob,
+        homeOwnership,
+        purpose,
         monthlyDebt,
         yearsofCreditHistory,
         lastDelinquent,
@@ -81,9 +91,6 @@ class employeeServices {
         creditBalance,
         maxOpenCredit,
         bankruptcies,
-        term,
-        homeOwnership,
-        purpose,
       ];
       const sc = await calculateScore.calculate(weights);
       customerData.score = sc;

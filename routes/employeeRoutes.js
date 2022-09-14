@@ -14,7 +14,10 @@ router
   .put(employeeMiddleware.Protect, employeeMiddleware.isAuthorized, employee.updateEmployee)
   .delete(employeeMiddleware.Protect, employeeMiddleware.isAuthorized, employee.deleteEmployee);
 
-router.route('/loan/:id').delete(employeeMiddleware.Protect, employee.deleteLoanApplication);
+router
+  .route('/loan/:id')
+  .get(employeeMiddleware.Protect, employee.getLoanStatus)
+  .delete(employeeMiddleware.Protect, employee.deleteLoanApplication);
 router.route('/loan/:id/approve').put(employeeMiddleware.Protect, employee.approveLoanApplication);
 router.route('/loan/:id/decline').put(employeeMiddleware.Protect, employee.declineLoanApplication);
 router.route('/loan/:id/predict').put(employeeMiddleware.Protect, employee.predictLoanApplication);

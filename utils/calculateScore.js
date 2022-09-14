@@ -2,6 +2,7 @@ const { go } = require('./mlService');
 
 // import * as tf from '@tensorflow/tfjs';
 exports.calculate = async (weights) => {
+  const conv = [100, 1, 1, 100, 1, 1, 1, 100, 1, 1, 1, 1, 100, 100, 1];
   const mean = [
     7717042.881, 0.6896756764, 1203.060179, 1063053.42, 5.692907279, 1.963967632, 3.805664353, 18569.09958, 18.10574773,
     550.6340986, 11.16863148, 0.1678882124, 293266.8787, 716570.0537, 0.1147671307,
@@ -12,6 +13,6 @@ exports.calculate = async (weights) => {
   ];
 
   const n = weights.length;
-  for (let i = 0; i < n; i++) weights[i] = (weights[i] - mean[i]) / standardDeviation[i];
+  for (let i = 0; i < n; i++) weights[i] = (weights[i] * conv[i] - mean[i]) / standardDeviation[i];
   return await go(weights);
 };
