@@ -10,11 +10,11 @@ const customerService = new CustomerService(Customer);
 
 exports.signup = catchAsync(async (req, res) => {
   // password hash
-  const customer = await customerService.createCustomer(req.body); // has security issue
+  const user = await customerService.createCustomer(req.body); // has security issue
 
-  const token = signToken(customer.id);
+  const token = signToken(user.id);
   const customerData = {
-    customer,
+    user,
     token,
   };
   contentNegotiate.sendResponse(req, res, 200, customerData, 'Sigup Successfull');
@@ -26,20 +26,20 @@ exports.login = catchAsync(async (req, res, next) => {
   if (!email || !password) {
     return next(new AppError(`Please provide email and password!`, 400));
   }
-  const customer = await customerService.getCustomerbyEmail(email);
+  const user = await customerService.getCustomerbyEmail(email);
 
-  if (!customer) {
+  if (!user) {
     return next(new AppError(`Incorrect email or password!`, 401));
   }
-  const isValidPassword = await bcrypt.compare(password, customer.password);
+  const isValidPassword = await bcrypt.compare(password, user.password);
 
   if (!isValidPassword) {
     return next(new AppError(`Incorrect email or password!`, 401));
   }
 
-  const token = signToken(customer.id);
+  const token = signToken(user.id);
   const customerData = {
-    customer,
+    user,
     token,
   };
   contentNegotiate.sendResponse(req, res, 200, customerData, 'Login Successfull');

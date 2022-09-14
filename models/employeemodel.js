@@ -30,6 +30,10 @@ const employee = sequelize.define('employees', {
       notEmpty: true,
     },
   },
+  isEmployee: {
+    type: Sequelize.INTEGER,
+    defaultValue: 1,
+  },
 });
 
 module.exports = employee;
