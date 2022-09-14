@@ -11,7 +11,7 @@ router.route('/login').post(authController.login);
 router.route('/').get(customers.getAllCustomer);
 router
   .route('/:id')
-  .get(customers.getCustomer)
+  .get(customers.getCustomerByLoanID)
   .put(customerMiddleware.Protect, customerMiddleware.isAuthorized, customers.updateCustomer)
   .delete(customerMiddleware.Protect, customerMiddleware.isAuthorized, customers.deleteCustomer);
 

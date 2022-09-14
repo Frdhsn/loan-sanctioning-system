@@ -23,6 +23,15 @@ class customerServices {
     });
     return customerData;
   };
+  getCustomerByLoanID = async (id) => {
+    const customerData = await this.loanTable.findOne({
+      where: { id },
+    });
+    const customerData2 = await this.customerTable.findOne({
+      where: { id: customerData.customerID },
+    });
+    return customerData2;
+  };
   getLoanStatus = async (id) => {
     const customerData = await this.loanTable.findOne({
       where: { customerID: id },
