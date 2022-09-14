@@ -28,7 +28,7 @@ class employeeServices {
   getLoanStatus = async (id) => {
     console.log(`query kortesi ` + id + `diye!`);
     const customerData = await this.loanTable.findOne({
-      where: { customerID: id },
+      where: { id },
     });
     return customerData;
   };
