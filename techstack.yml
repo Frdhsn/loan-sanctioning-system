@@ -2,7 +2,7 @@ repo_name: Frdhsn/loan-sanctioning-system
 report_id: 53ffe58292d683a9d5cc98600ed5b089
 version: 0.1
 repo_type: Public
-timestamp: '2024-01-23T18:56:40+00:00'
+timestamp: '2024-02-29T19:36:11+00:00'
 requested_by: Frdhsn
 provider: github
 branch: main
@@ -111,7 +111,7 @@ tools:
   last_updated_by: frdhsn
   last_updated_on: 2022-09-08 21:27:53.000000000 Z
 - name: Prettier
-  description: 'Prettier is an opinionated code formatter. '
+  description: Prettier is an opinionated code formatter.
   website_url: https://prettier.io/
   version: 2.7.1
   license: MIT
